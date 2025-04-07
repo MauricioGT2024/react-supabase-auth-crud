@@ -1,12 +1,73 @@
-# React + Vite
+# React Supabase Auth CRUD
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web desarrollada con React que implementa autenticación y operaciones CRUD utilizando Supabase como backend.
 
-Currently, two official plugins are available:
+## Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Autenticación con email usando Magic Link de Supabase
+- CRUD completo de tareas
+- Interfaz responsiva con Bootstrap
+- Gestión de estado con Context API
+- Enrutamiento con React Router
 
-## Expanding the ESLint configuration
+## Tecnologías
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React 19
+- Supabase
+- Bootstrap 5
+- Vite
+- React Router
+
+## Configuración del proyecto
+
+1. Clona el repositorio:
+```bash
+git clone <url-del-repositorio>
+cd react-supabase-auth-crud
+```
+
+2. Instala las dependencias:
+```bash
+npm install
+```
+
+3. Crea un archivo `.env.local` en la raíz del proyecto con las siguientes variables:
+```
+VITE_SUPABASE_URL=tu_url_de_supabase
+VITE_SUPABASE_ANON_KEY=tu_clave_anonima_de_supabase
+```
+
+4. Inicia el servidor de desarrollo:
+```bash
+npm run dev
+```
+
+## Estructura de la base de datos
+
+La aplicación requiere una tabla `tasks` en Supabase con la siguiente estructura:
+
+```sql
+create table tasks (
+  id serial primary key,
+  name text not null,
+  done boolean default false,
+  user_id uuid references auth.users not null,
+  created_at timestamp with time zone default timezone('utc'::text, now())
+);
+```
+
+## Funcionalidades
+
+- **Autenticación**: Sistema de login mediante Magic Link
+- **Gestión de tareas**: 
+  - Crear nuevas tareas
+  - Marcar tareas como completadas
+  - Eliminar tareas
+  - Filtrar tareas por estado (completadas/pendientes)
+
+## Scripts disponibles
+
+- `npm run dev`: Inicia el servidor de desarrollo
+- `npm run build`: Construye la aplicación para producción
+- `npm run lint`: Ejecuta el linter
+- `npm run preview`: Previsualiza la versión de producción
